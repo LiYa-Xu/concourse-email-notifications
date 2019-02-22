@@ -15,7 +15,7 @@ resources:
   - name: my-git-project
     type: git
     source:
-      uri:https://github.com/LiYa-Xu/concourse-email-notifications.git
+      uri: https://github.com/LiYa-Xu/concourse-email-notifications.git
       branch: master
 
   - name: email-notification
