@@ -1,0 +1,35 @@
+---
+# Jobs to be executed
+jobs:
+  - name: email-notification
+    public: true
+    serial: true
+    plan:
+      - get: my-git-project
+      - put: email-notification
+        params:
+          input_dir: my-git-project
+          email_body: {{email_body}}
+
+resources:
+  - name: my-git-project
+    type: git
+    source:
+      uri:https://github.com/LiYa-Xu/concourse-email-notifications.git
+      branch: master
+
+  - name: email-notification
+    type: email-notification-resource
+    source:
+      smtp_host: "smtp.126.com"
+      smtp_port: "25"
+      smtp_username: {{smtp_user}}
+      smtp_password: {{smtp_password}}
+      default_recipient: "xuliya_0116@126.com"
+
+resource_types:
+  - name: email-notification-resource
+    type: docker-image
+    source:
+      repository: xuliya/concourse-email-notification
+      tag: latest
